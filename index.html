@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turnos Reumatología · Acceso</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="login-page">
+  <div class="login-shell">
+    <aside class="login-brand">
+      <div class="brand-mark">R</div>
+      <h1>Reumatología</h1>
+      <p class="brand-sub">Sistema de gestión de turnos</p>
+      <ul class="brand-list">
+        <li>Reserva en línea</li>
+        <li>Confirmación por WhatsApp</li>
+        <li>Cancelación con aviso automático</li>
+      </ul>
+    </aside>
+
+    <section class="login-panel">
+      <h2>Iniciar sesión</h2>
+      <p class="login-help">Ingresá tus credenciales para continuar</p>
+
+      <form id="loginForm" autocomplete="off">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" placeholder="Ej: juan" required>
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+
+        <button type="submit" class="btn-primary">Ingresar</button>
+        <p id="loginError" class="login-error" hidden></p>
+      </form>
+
+      <div class="login-demo">
+        <p><b>Demo</b></p>
+        <p>Admin: <code>admin / admin123</code></p>
+        <p>Cliente: <code>juan / 1234</code></p>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
