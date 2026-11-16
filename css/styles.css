@@ -226,7 +226,6 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ========== HEADER / NAV ========== */
 header {
-  background: var(--negro);
   color: var(--blanco);
   padding: 16px 32px;
   display: flex;
@@ -279,54 +278,100 @@ header button:hover {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
+/* --- NUEVO DISEÑO DE CARDS (TURNOS) --- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
 .card {
-  background: var(--blanco);
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--beige-borde);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow .15s ease, border-color .15s ease;
+  background: #ffffff;
+  border: 1px solid #e6dfd2; /* Borde sutil beige */
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Sombra muy suave */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
 }
+
 .card:hover {
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 47, 74, 0.08);
   border-color: #d6cdba;
 }
-.card p {
-  font-size: 0.9rem;
-  color: var(--texto);
-  margin: 4px 0;
+
+/* Cabecera de la Card: Fecha y Hora */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0ece4;
 }
-.card p b { color: var(--azul-oscuro); }
-.card button {
-  margin-top: 14px;
-  margin-right: 6px;
-  padding: 9px 16px;
-  border-radius: 8px;
-  border: none;
-  background: var(--azul-oscuro);
-  color: var(--blanco);
+
+.card-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-date span {
   font-size: 0.85rem;
   font-weight: 500;
-  transition: background .15s ease;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
-.card button:hover { background: var(--azul-oscuro-hover); }
-.card .btn-danger { background: var(--blanco); color: var(--error); border: 1px solid #d9c1c1; }
-.card .btn-danger:hover { background: #fdf5f5; }
 
-/* Estados */
-.card::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 16px; bottom: 16px;
-  width: 3px;
-  border-radius: 3px;
-  background: var(--azul-oscuro);
+.card-time {
+  background: #f8f6f2;
+  color: var(--azul-oscuro);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
-.card.pendiente::before { background: var(--warn); }
-.card.aprobado::before  { background: var(--ok); }
-.card.cancelado::before { background: var(--error); }
-.card.rechazado::before { background: #999; }
+
+/* Cuerpo de la Card: Doctora y Motivo */
+.card-body {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.doctor-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.doctor-name::before {
+  content: "👩‍⚕️"; /* O usar un SVG si preferís */
+  font-size: 1.1rem;
+}
+
+/* Botones dentro de la card */
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto; /* Empuja los botones al fondo */
+}
+
+.card-actions .btn-sm {
+  flex: 1; /* Hace que los botones ocupen el ancho disponible */
+  text-align: center;
+  justify-content: center;
+}
 
 /* Badge de estado opcional */
 .badge {
@@ -857,4 +902,235 @@ header button:hover {
   font-size: 0.85rem;
   color: var(--ok);
   font-weight: 500;
+}
+
+/* --- CARDS ESPECÍFICAS DEL ADMINISTRADOR --- */
+.card-pending, .card-approved {
+  padding: 20px;
+  border-left: 4px solid var(--warn); /* Amarillo para pendientes */
+}
+
+.card-approved {
+  border-left-color: var(--ok); /* Verde para aprobados */
+}
+
+/* Hacer que el nombre del paciente resalte */
+.patient-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  margin-bottom: 2px;
+}
+
+/* Contacto más sutil */
+.patient-contact {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+/* Botones del admin más compactos */
+.card-actions .btn-sm {
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Iconos dentro de los botones del admin */
+.card-actions .btn-icon {
+  flex: 0 0 auto; /* No se estira */
+  padding: 8px;
+  width: 34px;
+  height: 34px;
+}
+
+.card-available.selected {
+  border-color: var(--azul-oscuro);
+  background-color: #fcfbf9;
+  box-shadow: 0 0 0 2px var(--azul-oscuro);
+}
+
+/* --- BARRA SUPERIOR (HEADER) --- */
+.header-subtitle {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  margin-top: 4px;
+}
+
+/* --- BANNER DE BIENVENIDA --- */
+.welcome-banner {
+  background: var(--azul-oscuro);
+  color: white;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  box-shadow: 0 10px 30px rgba(30, 47, 74, 0.15);
+}
+.welcome-text h2 {
+  color: white;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.welcome-text p {
+  color: #b8c3d4;
+  font-size: 0.95rem;
+}
+.welcome-icon {
+  color: white;
+}
+
+/* --- TARJETAS DE PASOS (INICIO) --- */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.step-card {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--beige-borde);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  position: relative;
+}
+.step-number {
+  background: #f5f1ea;
+  color: var(--azul-oscuro);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+.step-card h4 {
+  font-size: 1rem;
+  color: var(--azul-oscuro);
+  margin-bottom: 8px;
+}
+.step-card p {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  line-height: 1.5;
+}
+
+/* --- ESTADO CHECK-IN (LOGO GRANDE) --- */
+.card.checkin-active {
+  border: 2px solid var(--ok);
+  background: #f8fcf9;
+  text-align: center;
+  padding: 40px 24px;
+}
+.checkin-icon {
+  width: 80px;
+  height: 80px;
+  background: #e2efe7;
+  color: var(--ok);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+}
+.checkin-icon svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2.5;
+}
+.checkin-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ok);
+  margin-bottom: 8px;
+}
+.checkin-subtitle {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin-bottom: 20px;
+}
+
+/* --- FOTO DE PERFIL Y FORMULARIO DE DATOS --- */
+.profile-upload-container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: #fcfbf9;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--beige-borde);
+}
+
+.profile-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--azul-oscuro);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  overflow: hidden;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-upload-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Grilla para los inputs */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Foto en el header (arriba a la derecha) */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--azul-oscuro);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  overflow: hidden;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

@@ -1,17 +1,25 @@
 /* ============================================================
-   PANEL DEL CLIENTE - Lógica completa con navegación
+   PANEL DEL CLIENTE - Lógica completa y profesional
    ============================================================ */
 
 let cliente = null;
 let turnoClienteReprogramar = null;
 let turnoSeleccionadoReserva = null;
+let relojInterval = null;
 
 /* ---------- INICIALIZACIÓN ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   cliente = verificarSesion('cliente');
   if (!cliente) return;
 
+  // Configurar nombre y saludo
   document.getElementById('nombreCliente').textContent = cliente.nombre;
+  const primerNombre = cliente.nombre.split(' ')[0];
+  const saludoEl = document.getElementById('saludoNombre');
+  if (saludoEl) saludoEl.textContent = primerNombre;
+
+  // Iniciar reloj de fecha/hora
+  iniciarReloj();
 
   // Navegación del sidebar
   document.querySelectorAll('.nav-item').forEach(item => {
@@ -38,6 +46,27 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAll();
 });
 
+/* ---------- RELOJ EN TIEMPO REAL ---------- */
+function iniciarReloj() {
+  const el = document.getElementById('fechaHoraActual');
+  if (!el) return;
+
+  const actualizar = () => {
+    const ahora = new Date();
+    // Formato: "Miércoles, 12 de Noviembre - 14:35 hs"
+    const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+    let fechaStr = ahora.toLocaleDateString('es-AR', opciones);
+    // Capitalizar primera letra
+    fechaStr = fechaStr.charAt(0).toUpperCase() + fechaStr.slice(1);
+    
+    const horaStr = ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+    el.textContent = `${fechaStr} · ${horaStr} hs`;
+  };
+
+  actualizar();
+  relojInterval = setInterval(actualizar, 60000); // Actualizar cada minuto
+}
+
 /* ---------- NAVEGACIÓN ENTRE VISTAS ---------- */
 function switchView(viewName, navElement) {
   document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
@@ -59,7 +88,12 @@ function switchView(viewName, navElement) {
 
   // Refrescar vista activa
   if (viewName === 'turnos') renderMisTurnos();
-  if (viewName === 'reservar') renderTurnosDisponibles();
+  if (viewName === 'reservar') {
+    renderTurnosDisponibles();
+    document.getElementById('formReserva').style.display = 'none';
+    turnoSeleccionadoReserva = null;
+    document.querySelectorAll('.card-available').forEach(c => c.classList.remove('selected'));
+  }
   if (viewName === 'historial') renderHistorial();
   if (viewName === 'datos') cargarDatosContacto();
   if (viewName === 'notificaciones') renderNotificaciones();
@@ -85,13 +119,13 @@ function renderTurnosDisponibles() {
   }
 
   cont.innerHTML = turnos.map(t => `
-    <div class="card card-available">
+    <div class="card card-available" id="card-${t.id}">
       <div class="card-header">
-        <span class="card-date">${t.fecha}</span>
-        <span class="card-time">${t.hora}</span>
+        <span class="card-date">${t.fecha} <span>${t.hora} hs</span></span>
       </div>
       <div class="card-body">
         <p class="doctor-name">${t.doctora}</p>
+        <p style="font-size: 0.8rem; color: var(--texto-suave); margin-top: 4px;">Consulta de reumatología</p>
       </div>
       <div class="card-actions">
         <button class="btn-sm btn-primary" onclick="seleccionarTurno(${t.id})">Seleccionar</button>
@@ -107,29 +141,34 @@ function seleccionarTurno(id) {
 
   turnoSeleccionadoReserva = id;
 
-  // Rellenar formulario con datos actuales
+  // Efecto visual
+  document.querySelectorAll('.card-available').forEach(c => c.classList.remove('selected'));
+  const cardSeleccionada = document.getElementById(`card-${id}`);
+  if (cardSeleccionada) cardSeleccionada.classList.add('selected');
+
+  // Rellenar formulario
   document.getElementById('reservaNombre').value = cliente.nombre || '';
   document.getElementById('reservaTelefono').value = cliente.telefono || '';
   document.getElementById('reservaEmail').value = cliente.email || '';
   document.getElementById('reservaMotivo').value = '';
 
-  document.getElementById('reservaTurnoInfo').textContent =
-    `Turno seleccionado: ${t.fecha} a las ${t.hora} — ${t.doctora}`;
+  document.getElementById('reservaTurnoInfo').innerHTML =
+    `📅 Turno seleccionado: <b>${t.fecha}</b> a las <b>${t.hora} hs</b> — ${t.doctora}`;
 
   document.getElementById('formReserva').style.display = 'block';
   document.getElementById('msgReserva').style.display = 'none';
 
-  // Scroll al formulario
   document.getElementById('formReserva').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ---------- CANCELAR RESERVA (volver a la lista) ---------- */
+/* ---------- CANCELAR RESERVA ---------- */
 function cancelarReserva() {
   turnoSeleccionadoReserva = null;
+  document.querySelectorAll('.card-available').forEach(c => c.classList.remove('selected'));
   document.getElementById('formReserva').style.display = 'none';
 }
 
-/* ---------- CONFIRMAR RESERVA CON VALIDACIÓN ---------- */
+/* ---------- CONFIRMAR RESERVA ---------- */
 function confirmarReserva() {
   if (!turnoSeleccionadoReserva) return;
 
@@ -138,9 +177,8 @@ function confirmarReserva() {
   const motivo = document.getElementById('reservaMotivo').value.trim();
   const orden = document.getElementById('reservaOrden').value;
 
-  // Validaciones
   if (!telefono || telefono.length < 8) {
-    mostrarMsgReserva('Ingresá un teléfono válido (mínimo 8 dígitos, con código de país).', 'error');
+    mostrarMsgReserva('Ingresá un teléfono válido (mínimo 8 dígitos).', 'error');
     return;
   }
   if (!motivo) {
@@ -148,7 +186,7 @@ function confirmarReserva() {
     return;
   }
 
-  // Actualizar datos del cliente si cambiaron
+  // Actualizar datos si cambiaron
   if (telefono !== cliente.telefono || email !== cliente.email) {
     const usuarios = getUsuarios();
     const user = usuarios.find(u => u.usuario === cliente.usuario);
@@ -162,7 +200,6 @@ function confirmarReserva() {
     }
   }
 
-  // Actualizar turno
   const turnos = getTurnos();
   const turno = turnos.find(x => x.id === turnoSeleccionadoReserva);
   if (!turno || turno.estado !== 'disponible') {
@@ -181,22 +218,20 @@ function confirmarReserva() {
   addNotif({
     para: 'admin',
     tipo: 'nueva_reserva',
-    mensaje: `${cliente.nombre} solicitó el turno del ${turno.fecha} ${turno.hora}. Motivo: ${motivo.substring(0, 60)}${motivo.length > 60 ? '...' : ''}`
+    mensaje: `${cliente.nombre} solicitó el turno del ${turno.fecha} ${turno.hora}. Motivo: ${motivo.substring(0, 60)}...`
   });
 
-  mostrarMsgReserva('Solicitud enviada correctamente. Esperá la confirmación del administrador.', 'ok');
+  mostrarMsgReserva('✅ Solicitud enviada. El paso 3 está en curso: esperá la confirmación.', 'ok');
 
-  // Reset
   turnoSeleccionadoReserva = null;
   document.getElementById('formReserva').style.display = 'none';
+  document.querySelectorAll('.card-available').forEach(c => c.classList.remove('selected'));
 
-  // Refrescar
   renderAll();
 
-  // Cambiar a "Mis Turnos" después de 1.5s
   setTimeout(() => {
     switchView('turnos', document.querySelector('[data-view="turnos"]'));
-  }, 1500);
+  }, 2000);
 }
 
 function mostrarMsgReserva(texto, tipo) {
@@ -207,7 +242,7 @@ function mostrarMsgReserva(texto, tipo) {
   el.style.fontWeight = '500';
 }
 
-/* ---------- MIS TURNOS (activos) ---------- */
+/* ---------- MIS TURNOS (CON CHECK-IN GIGANTE) ---------- */
 function renderMisTurnos() {
   const cont = document.getElementById('misTurnos');
   const todos = getTurnos().filter(t => t.cliente === cliente.usuario);
@@ -225,33 +260,39 @@ function renderMisTurnos() {
   }
 
   cont.innerHTML = activos.map(t => {
-    let badgeClass = '';
-    let badgeText = '';
-    let botones = '';
-
-    if (t.estado === 'pendiente') {
-      badgeClass = 'badge-pending';
-      badgeText = 'Pendiente de aprobación';
-    } else if (t.estado === 'aprobado') {
-      badgeClass = 'badge-approved';
-      badgeText = 'Confirmado';
-      botones = `
-        <button class="btn-sm btn-outline" onclick="abrirReprogramarCliente(${t.id})">Reprogramar</button>
-        <button class="btn-sm btn-outline-danger" onclick="cancelar(${t.id})">Cancelar</button>
+    // Si está aprobado, mostramos el CHECK-IN GIGANTE
+    if (t.estado === 'aprobado') {
+      return `
+        <div class="card checkin-active">
+          <div class="checkin-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <h3 class="checkin-title">¡Turno Confirmado!</h3>
+          <p class="checkin-subtitle">${t.fecha} a las ${t.hora} hs — ${t.doctora}</p>
+          <div class="card-actions" style="justify-content: center;">
+            <button class="btn-sm btn-outline" onclick="abrirReprogramarCliente(${t.id})">Reprogramar</button>
+            <button class="btn-sm btn-outline-danger" onclick="cancelar(${t.id})">Cancelar</button>
+          </div>
+        </div>
       `;
     }
 
+    // Si está pendiente, mostramos el estado "Esperando confirmación" (Paso 3)
+    let badgeClass = 'badge-pending';
+    let badgeText = 'Esperando confirmación';
+    let mensajeExtra = '<p style="font-size:0.8rem; color:var(--texto-suave); margin-top:8px;">La secretaria revisará tu solicitud a la brevedad.</p>';
+
     return `
-      <div class="card">
+      <div class="card" style="border-left: 4px solid var(--warn);">
         <div class="card-header">
           <span class="badge ${badgeClass}">${badgeText}</span>
-          <span class="card-date">${t.fecha} · ${t.hora}</span>
+          <span class="card-date">${t.fecha} <span>${t.hora} hs</span></span>
         </div>
         <div class="card-body">
           <p class="doctor-name">${t.doctora}</p>
-          ${t.motivo ? `<p style="font-size:0.82rem; color:var(--texto-suave); margin-top:6px;">Motivo: ${t.motivo.substring(0, 80)}${t.motivo.length > 80 ? '...' : ''}</p>` : ''}
+          ${t.motivo ? `<p style="font-size:0.82rem; color:var(--texto-suave); margin-top:8px; background:#fcfbf9; padding:8px; border-radius:4px;">Motivo: ${t.motivo.substring(0, 80)}...</p>` : ''}
+          ${mensajeExtra}
         </div>
-        <div class="card-actions">${botones}</div>
       </div>
     `;
   }).join('');
@@ -285,7 +326,7 @@ function renderHistorial() {
       <div class="card" style="opacity: 0.85;">
         <div class="card-header">
           <span class="badge ${badgeClass}">${badgeText}</span>
-          <span class="card-date">${t.fecha} · ${t.hora}</span>
+          <span class="card-date">${t.fecha} <span>${t.hora} hs</span></span>
         </div>
         <div class="card-body">
           <p class="doctor-name">${t.doctora}</p>
@@ -327,7 +368,7 @@ function guardarDatos() {
   const nuevoEmail = document.getElementById('emailCliente').value.trim();
 
   if (!nuevoTel || nuevoTel.length < 8) {
-    alert('Ingresá un teléfono válido (mínimo 8 dígitos, con código de país).');
+    alert('Ingresá un teléfono válido (mínimo 8 dígitos).');
     return;
   }
 
@@ -362,7 +403,7 @@ function cancelar(id) {
     return;
   }
 
-  if (!confirm('¿Seguro querés cancelar este turno?\nUna vez cancelado, el turno queda liberado.')) return;
+  if (!confirm('¿Seguro querés cancelar este turno?')) return;
 
   t.estado = 'cancelado';
   t.fechaCancelacion = new Date().toISOString();
@@ -429,7 +470,7 @@ function confirmReprogramCliente() {
 
   t.fecha = nuevaFecha;
   t.hora = nuevaHora;
-  t.estado = 'pendiente';
+  t.estado = 'pendiente'; // Vuelve a pendiente para aprobación
   t.fechaReprogramacion = new Date().toISOString();
   saveTurnos(turnos);
 
