@@ -8,7 +8,7 @@
 </head>
 <body class="admin-body">
 
-  <!-- ===== SIDEBAR CLIENTE ===== -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="brand-mark">R</div>
@@ -48,150 +48,125 @@
     </div>
   </aside>
 
-  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <!-- MAIN CONTENT -->
   <main class="main-content">
-        <header class="content-header">
-          <div>
-            <h1 id="viewTitle">Inicio</h1>
-            <p class="header-subtitle" id="headerSubtitle">Bienvenido a tu portal de salud</p>
-          </div>
-          <div class="user-info" style="text-align: right;">
-            <span id="nombreCliente" style="display: block; font-weight: 600; color: var(--azul-oscuro);"></span>
-            <span id="fechaHoraActual" style="font-size: 0.8rem; color: var(--texto-suave);"></span>
-          </div>
-        </header>
-      
-        <!-- VISTA: INICIO (explicación del proceso) -->
-        <section id="view-inicio" class="view-section active">
+    <header class="content-header">
+      <button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div>
+        <h1 id="viewTitle">Inicio</h1>
+        <p class="header-subtitle" id="headerSubtitle">Bienvenido a tu portal de salud</p>
+      </div>
+      <div class="user-info">
+        <div class="header-avatar" id="headerAvatar"><span id="headerInitials">JP</span></div>
+        <div style="text-align: right;">
+          <span id="nombreCliente" style="display: block; font-weight: 600; color: var(--azul-oscuro);"></span>
+          <span id="fechaHoraActual" style="font-size: 0.8rem; color: var(--texto-suave);"></span>
+        </div>
+      </div>
+    </header>
 
-          <!-- Banner de bienvenida -->
-          <div class="welcome-banner">
-            <div class="welcome-text">
-              <h2>Hola, <span id="saludoNombre"></span></h2>
-              <p>Gestioná tus turnos de reumatología de forma simple y segura.</p>
-            </div>
-            <div class="welcome-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; opacity: 0.8;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-          </div>
-        
-          <!-- Pasos Rápidos -->
-          <div class="panel-section" style="margin-bottom: 24px; border: none; box-shadow: none; padding: 0;">
-            <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--texto-suave); margin-bottom: 16px;">Cómo funciona</h3>
-            <div class="steps-grid">
-              <div class="step-card">
-                <div class="step-number">1</div>
-                <h4>Verificá tus datos</h4>
-                <p>Asegurate de que tu teléfono esté actualizado en "Mis Datos".</p>
-              </div>
-              <div class="step-card">
-                <div class="step-number">2</div>
-                <h4>Reservá tu turno</h4>
-                <p>Elegí el día y horario que mejor te convenga.</p>
-              </div>
-              <div class="step-card">
-                <div class="step-number">3</div>
-                <h4>Confirmación</h4>
-                <p>Recibirás un WhatsApp cuando la secretaria lo apruebe.</p>
-              </div>
-            </div>
-          </div>
-        
-          <!-- Requisitos -->
-          <div class="panel-section">
-            <h2>Qué necesitás para la consulta</h2>
-            <ul class="instrucciones-list">
-              <li><strong>DNI</strong> (documento de identidad).</li>
-              <li><strong>Orden médica</strong> de derivación a reumatología (si es tu primera consulta).</li>
-              <li><strong>Estudios previos</strong> (radiografías, análisis de laboratorio, etc.) si los tenés.</li>
-              <li>Llegá <strong>10 minutos antes</strong> de la hora asignada.</li>
-            </ul>
-          </div>
-        </section>
+    <!-- VISTA: INICIO -->
+    <section id="view-inicio" class="view-section active">
+      <!-- Alerta dinámica -->
+      <div id="alertaInicioPendiente" style="display: none;"></div>
+
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h2>Hola, <span id="saludoNombre"></span></h2>
+          <p>Gestioná tus turnos de reumatología de forma simple y segura.</p>
+        </div>
+        <div class="welcome-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; opacity: 0.8;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+      </div>
+
+      <div class="panel-section" style="margin-bottom: 24px; border: none; box-shadow: none; padding: 0;">
+        <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--texto-suave); margin-bottom: 16px;">Cómo funciona</h3>
+        <div class="steps-grid">
+          <div class="step-card"><div class="step-number">1</div><h4>Verificá tus datos</h4><p>Asegurate de que tu teléfono esté actualizado en "Mis Datos".</p></div>
+          <div class="step-card"><div class="step-number">2</div><h4>Reservá tu turno</h4><p>Elegí el día y horario que mejor te convenga.</p></div>
+          <div class="step-card"><div class="step-number">3</div><h4>Confirmación</h4><p>Recibirás un WhatsApp cuando la secretaria lo apruebe.</p></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h2>Qué necesitás para la consulta</h2>
+        <ul class="instrucciones-list">
+          <li><strong>DNI</strong> (documento de identidad).</li>
+          <li><strong>Orden médica</strong> de derivación a reumatología (si es tu primera consulta).</li>
+          <li><strong>Estudios previos</strong> (radiografías, análisis de laboratorio, etc.) si los tenés.</li>
+          <li>Llegá <strong>10 minutos antes</strong> de la hora asignada.</li>
+        </ul>
+      </div>
+    </section>
 
     <!-- VISTA: MIS TURNOS -->
     <section id="view-turnos" class="view-section">
       <div class="panel-section">
-        <h2>Turnos Activos</h2>
+        <h2>Mis Turnos Reservados</h2>
         <div id="misTurnos" class="cards-grid"></div>
       </div>
     </section>
 
-        <!-- VISTA: RESERVAR (con formulario validado) -->
+    <!-- VISTA: RESERVAR -->
     <section id="view-reservar" class="view-section">
-      
-      <!-- Guía de pasos superior -->
-      <div class="panel-section" style="margin-bottom: 24px; background: #fcfbf9;">
-        <div style="display: flex; gap: 24px; align-items: center; justify-content: center; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 8px; color: var(--azul-oscuro); font-weight: 600;">
-            <span style="background: var(--azul-oscuro); color: white; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">1</span>
-            Elegí el horario
+      <!-- FICHA DE LA DOCTORA -->
+      <div class="doctor-card" id="doctorCard">
+        <div class="doctor-card-header" onclick="document.getElementById('doctorCard').classList.toggle('expanded')">
+          <!-- Reemplazá la URL por una foto real de la doctora si tenés -->
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dra. Gómez" class="doctor-avatar">
+          <div class="doctor-info">
+            <h3>Dra. María Gómez</h3>
+            <p>Especialista en Reumatología</p>
+            <p style="font-size: 0.8rem; margin-top: 4px; color: var(--azul-oscuro); font-weight: 600;">Matrícula Nº 12345</p>
           </div>
-          <div style="color: #ccc;">→</div>
-          <div style="display: flex; align-items: center; gap: 8px; color: var(--texto-suave); font-weight: 600;">
-            <span style="background: #e6dfd2; color: var(--texto-suave); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">2</span>
-            Completá tus datos
-          </div>
-          <div style="color: #ccc;">→</div>
-          <div style="display: flex; align-items: center; gap: 8px; color: var(--texto-suave); font-weight: 600;">
-            <span style="background: #e6dfd2; color: var(--texto-suave); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">3</span>
-            Esperá confirmación
-          </div>
+          <button class="doctor-expand-btn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <div class="doctor-details">
+          <p style="font-size: 0.9rem; margin-bottom: 12px; color: var(--texto);"><strong>Sobre la especialista:</strong> Médica egresada de la Universidad Nacional de Tucumán, con más de 15 años de experiencia en el tratamiento de enfermedades autoinmunes y artritis.</p>
+          <ul>
+            <li>Atención de patologías articulares y óseas.</li>
+            <li>Tratamiento de artritis reumatoide y lupus.</li>
+            <li>Osteoporosis y rehabilitación.</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Lista de turnos disponibles -->
+      <div class="panel-section" style="margin-bottom: 24px; background: #fcfbf9;">
+        <div style="display: flex; gap: 24px; align-items: center; justify-content: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--azul-oscuro); font-weight: 600;"><span style="background: var(--azul-oscuro); color: white; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">1</span>Elegí el horario</div>
+          <div style="color: #ccc;">→</div>
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--texto-suave); font-weight: 600;"><span style="background: #e6dfd2; color: var(--texto-suave); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">2</span>Completá tus datos</div>
+          <div style="color: #ccc;">→</div>
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--texto-suave); font-weight: 600;"><span style="background: #e6dfd2; color: var(--texto-suave); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">3</span>Esperá confirmación</div>
+        </div>
+      </div>
+
       <div class="panel-section" style="margin-bottom: 24px;">
         <h2>Turnos Disponibles</h2>
-        <p style="color: var(--texto-suave); font-size: 0.9rem; margin-top: 4px; margin-bottom: 16px;">
-          Seleccioná un horario. Antes de confirmar, verificá que tus datos de contacto estén correctos.
-        </p>
+        <p style="color: var(--texto-suave); font-size: 0.9rem; margin-top: 4px; margin-bottom: 16px;">Seleccioná un horario. Antes de confirmar, verificá que tus datos de contacto estén correctos.</p>
         <div id="listaTurnos" class="cards-grid"></div>
       </div>
 
-      <!-- Formulario de reserva (oculto hasta seleccionar turno) -->
       <div id="formReserva" class="panel-section" style="display: none; border: 2px solid var(--azul-oscuro);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
           <h2>Confirmar Datos de la Reserva</h2>
           <span class="badge badge-pending" style="font-size: 0.75rem;">Paso 2 de 3</span>
         </div>
-        
         <p id="reservaTurnoInfo" style="background: #f8f6f2; padding: 12px; border-radius: 8px; color: var(--azul-oscuro); font-weight: 600; margin-bottom: 24px;"></p>
-
         <div style="display: grid; gap: 16px; max-width: 600px;">
-          <div>
-            <label for="reservaNombre">Nombre completo</label>
-            <input type="text" id="reservaNombre" readonly style="background: #fcfbf9; color: var(--texto-suave); border-color: #f0ece4;">
-            <p class="field-hint">Este es tu nombre registrado. Si es incorrecto, contactá al administrador.</p>
-          </div>
-          
+          <div><label for="reservaNombre">Nombre completo</label><input type="text" id="reservaNombre" readonly style="background: #fcfbf9; color: var(--texto-suave); border-color: #f0ece4;"><p class="field-hint">Este es tu nombre registrado.</p></div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div>
-              <label for="reservaTelefono">Teléfono (WhatsApp) *</label>
-              <input type="tel" id="reservaTelefono" placeholder="Ej: 5491123456789" required>
-              <p class="field-hint">Sin el código de país, solo números.</p>
-            </div>
-            <div>
-              <label for="reservaEmail">Email</label>
-              <input type="email" id="reservaEmail" placeholder="tu@email.com">
-            </div>
+            <div><label for="reservaTelefono">Teléfono (WhatsApp) *</label><input type="tel" id="reservaTelefono" placeholder="Ej: 5491123456789" required><p class="field-hint">Sin el código de país, solo números.</p></div>
+            <div><label for="reservaEmail">Email</label><input type="email" id="reservaEmail" placeholder="tu@email.com"></div>
           </div>
-
-          <div>
-            <label for="reservaMotivo">Motivo de la consulta *</label>
-            <textarea id="reservaMotivo" rows="3" placeholder="Ej: Control de artritis reumatoide, primera consulta por dolor articular..." required></textarea>
-          </div>
-          
-          <div>
-            <label for="reservaOrden">¿Tenés orden médica?</label>
-            <select id="reservaOrden">
-              <option value="si">Sí, tengo orden de derivación</option>
-              <option value="no">No tengo orden</option>
-              <option value="control">Es un control (ya soy paciente)</option>
-            </select>
-          </div>
+          <div><label for="reservaMotivo">Motivo de la consulta *</label><textarea id="reservaMotivo" rows="3" placeholder="Ej: Control de artritis reumatoide..." required></textarea></div>
+          <div><label for="reservaOrden">¿Tenés orden médica?</label><select id="reservaOrden"><option value="si">Sí, tengo orden de derivación</option><option value="no">No tengo orden</option><option value="control">Es un control (ya soy paciente)</option></select></div>
         </div>
-
         <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
           <button class="btn-secondary" onclick="cancelarReserva()">Volver</button>
           <button class="btn-primary" onclick="confirmarReserva()" style="width: auto; padding: 12px 32px;">Confirmar Solicitud</button>
@@ -200,96 +175,69 @@
       </div>
     </section>
 
-    <!-- VISTA: HISTORIAL -->
+    <!-- VISTA: HISTORIAL (TABLA) -->
     <section id="view-historial" class="view-section">
-      <div class="panel-section">
-        <h2>Historial de Turnos</h2>
-        <div id="historialTurnos" class="cards-grid"></div>
+      <div class="panel-section" style="padding: 0; overflow: hidden;">
+        <div style="padding: 20px 24px; border-bottom: 1px solid var(--beige-borde);">
+          <h2 style="margin: 0;">Historial de Turnos</h2>
+        </div>
+        <div class="table-container" style="border: none; border-radius: 0;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Profesional</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="historialTableBody">
+              <!-- El JS va a llenar esto -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-        <!-- VISTA: MIS DATOS -->
-      <section id="view-datos" class="view-section">
-        <div class="panel-section" style="max-width: 800px;">
-          <h2>Mi Ficha de Paciente</h2>
-          <p style="color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 24px;">
-            Completá tu información para que la doctora y la secretaria tengan todos los datos necesarios antes de tu consulta.
-          </p>
-        
-          <form id="formDatosPaciente" onsubmit="event.preventDefault(); guardarDatos();">
-            <!-- Sección Foto de Perfil -->
-            <div class="profile-upload-container">
-              <div class="profile-preview" id="profilePreview">
-                <!-- Acá irá la imagen o las iniciales -->
-                <span id="profileInitials">JP</span>
-              </div>
-              <div class="profile-upload-info">
-                <label for="fotoPerfil" class="btn-secondary" style="cursor: pointer; display: inline-block; text-align: center;">
-                  Subir foto de perfil
-                </label>
-                <input type="file" id="fotoPerfil" accept="image/*" style="display: none;" onchange="previsualizarFoto(event)">
-                <p class="field-hint">Formatos: JPG o PNG. Máx 2MB.</p>
-              </div>
+    <!-- VISTA: MIS DATOS -->
+    <section id="view-datos" class="view-section">
+      <div class="panel-section" style="max-width: 800px;">
+        <h2>Mi Ficha de Paciente</h2>
+        <p style="color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 24px;">Completá tu información para que la doctora y la secretaria tengan todos los datos necesarios antes de tu consulta.</p>
+        <form id="formDatosPaciente" onsubmit="event.preventDefault(); guardarDatos();">
+          <div class="profile-upload-container">
+            <div class="profile-preview" id="profilePreview"><span id="profileInitials">JP</span></div>
+            <div class="profile-upload-info">
+              <label for="fotoPerfil" class="btn-secondary" style="cursor: pointer; display: inline-block; text-align: center;">Subir foto de perfil</label>
+              <input type="file" id="fotoPerfil" accept="image/*" style="display: none;" onchange="previsualizarFoto(event)">
+              <p class="field-hint">Formatos: JPG o PNG. Máx 2MB.</p>
             </div>
-          
-            <hr style="border: none; border-top: 1px solid var(--beige-borde); margin: 24px 0;">
-          
-            <!-- Datos Personales -->
-            <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-bottom: 16px;">Datos Personales</h3>
-            <div class="form-grid-2">
-              <div>
-                <label>Nombre Completo</label>
-                <input type="text" id="datoNombre" readonly style="background: #fcfbf9; color: var(--texto-suave);">
-              </div>
-              <div>
-                <label for="datoDni">DNI *</label>
-                <input type="text" id="datoDni" placeholder="Ej: 30123456" required>
-              </div>
-              <div>
-                <label for="datoNacimiento">Fecha de Nacimiento</label>
-                <input type="date" id="datoNacimiento">
-              </div>
-              <div>
-                <label for="datoObraSocial">Obra Social / Prepaga</label>
-                <input type="text" id="datoObraSocial" placeholder="Ej: OSDE 210">
-              </div>
-            </div>
-          
-            <!-- Contacto -->
-            <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-top: 24px; margin-bottom: 16px;">Contacto</h3>
-            <div class="form-grid-2">
-              <div>
-                <label for="datoTelefono">Teléfono (WhatsApp) *</label>
-                <input type="tel" id="datoTelefono" placeholder="Ej: 5491123456789" required>
-              </div>
-              <div>
-                <label for="datoEmail">Email</label>
-                <input type="email" id="datoEmail" placeholder="tu@email.com">
-              </div>
-              <div>
-                <label for="datoDireccion">Dirección</label>
-                <input type="text" id="datoDireccion" placeholder="Calle, número, ciudad">
-              </div>
-              <div>
-                <label for="datoEmergencia">Teléfono de Emergencia</label>
-                <input type="tel" id="datoEmergencia" placeholder="Familiar a contactar">
-              </div>
-            </div>
-          
-            <!-- Información Médica -->
-            <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-top: 24px; margin-bottom: 16px;">Información Médica</h3>
-            <div>
-              <label for="datoAlergias">Alergias o condiciones médicas relevantes</label>
-              <textarea id="datoAlergias" rows="2" placeholder="Ej: Alergia a la penicilina, asma..."></textarea>
-            </div>
-          
-            <div style="margin-top: 32px; display: flex; gap: 12px;">
-              <button type="submit" class="btn-primary" style="width: auto; padding: 12px 32px;">Guardar Datos</button>
-              <p id="msgDatos" class="msg-ok" style="display: none; align-self: center;">Datos guardados correctamente.</p>
-            </div>
-          </form>
-        </div>
-      </section>
+          </div>
+          <hr style="border: none; border-top: 1px solid var(--beige-borde); margin: 24px 0;">
+          <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-bottom: 16px;">Datos Personales</h3>
+          <div class="form-grid-2">
+            <div><label>Nombre Completo</label><input type="text" id="datoNombre" readonly style="background: #fcfbf9; color: var(--texto-suave);"></div>
+            <div><label for="datoDni">DNI *</label><input type="text" id="datoDni" placeholder="Ej: 30123456" required></div>
+            <div><label for="datoNacimiento">Fecha de Nacimiento</label><input type="date" id="datoNacimiento"></div>
+            <div><label for="datoObraSocial">Obra Social / Prepaga</label><input type="text" id="datoObraSocial" placeholder="Ej: OSDE 210"></div>
+          </div>
+          <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-top: 24px; margin-bottom: 16px;">Contacto</h3>
+          <div class="form-grid-2">
+            <div><label for="datoTelefono">Teléfono (WhatsApp) *</label><input type="tel" id="datoTelefono" placeholder="Ej: 5491123456789" required></div>
+            <div><label for="datoEmail">Email</label><input type="email" id="datoEmail" placeholder="tu@email.com"></div>
+            <div><label for="datoDireccion">Dirección</label><input type="text" id="datoDireccion" placeholder="Calle, número, ciudad"></div>
+            <div><label for="datoEmergencia">Teléfono de Emergencia</label><input type="tel" id="datoEmergencia" placeholder="Familiar a contactar"></div>
+          </div>
+          <h3 style="font-size: 0.9rem; color: var(--azul-oscuro); margin-top: 24px; margin-bottom: 16px;">Información Médica</h3>
+          <div><label for="datoAlergias">Alergias o condiciones médicas relevantes</label><textarea id="datoAlergias" rows="2" placeholder="Ej: Alergia a la penicilina, asma..."></textarea></div>
+          <div style="margin-top: 32px; display: flex; gap: 12px;">
+            <button type="submit" class="btn-primary" style="width: auto; padding: 12px 32px;">Guardar Datos</button>
+            <p id="msgDatos" class="msg-ok" style="display: none; align-self: center;">Datos guardados correctamente.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
     <!-- VISTA: NOTIFICACIONES -->
     <section id="view-notificaciones" class="view-section">
       <div class="panel-section">
@@ -297,10 +245,9 @@
         <div id="notificaciones" class="list-container"></div>
       </div>
     </section>
-
   </main>
 
-  <!-- ===== MODAL REPROGRAMAR ===== -->
+  <!-- MODAL REPROGRAMAR -->
   <div id="reprogramModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-content">
       <h3>Reprogramar Turno</h3>
@@ -309,9 +256,7 @@
       <input type="date" id="newDateCliente">
       <label for="newTimeCliente">Nueva Hora</label>
       <input type="time" id="newTimeCliente">
-      <p style="font-size: 0.78rem; color: var(--texto-suave); margin-top: 12px;">
-        Tu solicitud será enviada al administrador para su aprobación.
-      </p>
+      <p style="font-size: 0.78rem; color: var(--texto-suave); margin-top: 12px;">Tu solicitud será enviada al administrador para su aprobación.</p>
       <div class="modal-actions">
         <button type="button" class="btn-secondary" onclick="closeModalCliente()">Cancelar</button>
         <button type="button" class="btn-primary" onclick="confirmReprogramCliente()">Enviar Solicitud</button>

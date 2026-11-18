@@ -16,10 +16,8 @@ function mostrarError(msg) {
 }
 
 function login() {
-  // Red de seguridad: si storage.js no cargó, avisamos en vez de fallar en silencio
   if (typeof getUsuarios !== 'function') {
     mostrarError('Error interno: no se pudo cargar la base de datos local.');
-    console.error('storage.js no está cargado o falló.');
     return;
   }
 
@@ -31,7 +29,8 @@ function login() {
     return;
   }
 
-  const user = getUsuarios().find(u => u.usuario === usuario && u.password === password);
+  // Compara usando el hash
+  const user = getUsuarios().find(u => u.usuario === usuario && u.password === hashPassword(password));
 
   if (!user) {
     mostrarError('Usuario o contraseña incorrectos.');

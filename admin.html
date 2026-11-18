@@ -8,118 +8,70 @@
 </head>
 <body class="admin-body">
 
-  <!-- Sidebar Navigation -->
   <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="brand-mark">R</div>
-      <span class="brand-name">Reumatología</span>
-    </div>
+    <div class="sidebar-header"><div class="brand-mark">R</div><span class="brand-name">Reumatología</span></div>
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active" data-view="dashboard">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        <span>Resumen</span>
-      </a>
-      <a href="#" class="nav-item" data-view="pending">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        <span>Solicitudes</span>
-      </a>
-      <a href="#" class="nav-item" data-view="agenda">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        <span>Agenda</span>
-      </a>
-      <a href="#" class="nav-item" data-view="patients">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        <span>Pacientes</span>
-      </a>
-      <a href="#" class="nav-item" data-view="history">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-        <span>Historial</span>
-      </a>
+      <a href="#" class="nav-item active" data-view="dashboard"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Resumen</span></a>
+      <a href="#" class="nav-item" data-view="pending"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Solicitudes</span></a>
+      <a href="#" class="nav-item" data-view="agenda"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span>Agenda</span></a>
+      <a href="#" class="nav-item" data-view="patients"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Pacientes</span></a>
+      <a href="#" class="nav-item" data-view="history"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg><span>Historial</span></a>
     </nav>
-    <div class="sidebar-footer">
-      <button onclick="logout()" class="btn-logout">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-        Cerrar sesión
-      </button>
-    </div>
+    <div class="sidebar-footer"><button onclick="logout()" class="btn-logout"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Cerrar sesión</button></div>
   </aside>
 
-  <!-- Main Content Area -->
   <main class="main-content">
     <header class="content-header">
-      <h1 id="viewTitle">Resumen</h1>
-      <div class="user-info">
-        <span id="adminName">Administrador</span>
-      </div>
+      <button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div><h1 id="viewTitle">Resumen</h1></div>
+      <div class="user-info"><span id="adminName">Administrador</span></div>
     </header>
 
-    <!-- View: Dashboard / Resumen -->
+    <!-- DASHBOARD -->
     <section id="view-dashboard" class="view-section active">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-label">Solicitudes Pendientes</span>
-          <span class="stat-value" id="statPending">0</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-label">Turnos Aprobados</span>
-          <span class="stat-value" id="statApproved">0</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-label">Cancelaciones Recientes</span>
-          <span class="stat-value" id="statCancelled">0</span>
-        </div>
+      <div class="stats-grid" id="statsExtra">
+        <div class="stat-card"><span class="stat-label">Solicitudes Pendientes</span><span class="stat-value" id="statPending">0</span></div>
+        <div class="stat-card"><span class="stat-label">Turnos Aprobados</span><span class="stat-value" id="statApproved">0</span></div>
+        <div class="stat-card"><span class="stat-label">Cancelaciones Recientes</span><span class="stat-value" id="statCancelled">0</span></div>
+      </div>
+      <div class="panel-section" style="margin-bottom: 24px;">
+        <h2>Actividad Reciente</h2><div id="recentActivity" class="list-container"></div>
       </div>
       <div class="panel-section">
-        <h2>Actividad Reciente</h2>
-        <div id="recentActivity" class="list-container"></div>
+        <h2>Respaldo de Información</h2>
+        <p style="color: var(--texto-suave); font-size: 0.9rem; margin-bottom: 16px;">Descargá una copia de seguridad de todos los datos del sistema (pacientes, turnos y notificaciones).</p>
+        <button class="btn-secondary" onclick="descargarRespaldo()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Descargar Copia de Seguridad (JSON)</button>
       </div>
     </section>
 
-    <!-- View: Solicitudes Pendientes -->
-    <section id="view-pending" class="view-section">
-      <div class="panel-section">
-        <h2>Solicitudes de Turno</h2>
-        <div id="pendingList" class="cards-grid"></div>
-      </div>
-    </section>
+    <!-- PENDING -->
+    <section id="view-pending" class="view-section"><div class="panel-section"><h2>Solicitudes de Turno</h2><div id="pendingList" class="cards-grid"></div></div></section>
 
-    <!-- View: Agenda (Aprobados y Reprogramación) -->
-    <section id="view-agenda" class="view-section">
-      <div class="panel-section">
-        <h2>Turnos Confirmados</h2>
-        <div id="agendaList" class="cards-grid"></div>
-      </div>
-    </section>
+    <!-- AGENDA -->
+    <section id="view-agenda" class="view-section"><div class="panel-section"><h2>Turnos Confirmados</h2><div id="agendaList" class="cards-grid"></div></div></section>
 
-    <!-- View: Pacientes (placeholder simple) -->
+    <!-- PATIENTS -->
     <section id="view-patients" class="view-section">
       <div class="panel-section">
         <h2>Directorio de Pacientes</h2>
+        <input type="text" id="buscarPaciente" placeholder="Buscar por nombre o DNI..." style="width: 100%; max-width: 400px; margin-bottom: 16px; padding: 10px; border: 1px solid var(--beige-borde); border-radius: 8px;" oninput="renderPatients()">
         <div id="patientsList" class="list-container"></div>
       </div>
     </section>
 
-    <!-- View: Historial (Cancelados / Rechazados) -->
-    <section id="view-history" class="view-section">
-      <div class="panel-section">
-        <h2>Historial de Turnos</h2>
-        <div id="historyList" class="list-container"></div>
-      </div>
-    </section>
+    <!-- HISTORY -->
+    <section id="view-history" class="view-section"><div class="panel-section"><h2>Historial de Turnos</h2><div id="historyList" class="list-container"></div></div></section>
   </main>
 
+  <!-- MODAL -->
   <div id="reprogramModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-content">
-      <h3>Reprogramar Turno</h3>
-      <p id="reprogramInfo"></p>
-      <label>Nueva Fecha</label>
-      <input type="date" id="newDate">
-      <label>Nueva Hora</label>
-      <input type="time" id="newTime">
-      <div class="modal-actions">
-        <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
-        <button type="button" class="btn-primary" onclick="confirmReprogram()">Guardar Cambios</button>
-      </div>
+      <h3>Reprogramar Turno</h3><p id="reprogramInfo"></p>
+      <label for="newDate">Nueva Fecha</label><input type="date" id="newDate">
+      <label for="newTime">Nueva Hora</label><input type="time" id="newTime">
+      <div class="modal-actions"><button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button><button type="button" class="btn-primary" onclick="confirmReprogram()">Guardar Cambios</button></div>
     </div>
   </div>
 
